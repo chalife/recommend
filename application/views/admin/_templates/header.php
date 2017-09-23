@@ -152,6 +152,7 @@
 				<!-- 业务菜单-BEGIN -->
 				<li class="header">业务管理</li>
                 <li class="<?= active_link_controller('blogs') ?>"><a href="/admin/blogs"><i class="fa fa-user"></i> <span>文章管理</span></a></li>
+                <li class="<?= active_link_controller('tags') ?>"><a href="/admin/tags"><i class="fa fa-user"></i> <span>标签管理</span></a></li>
                 <!--
 				<li class="treeview">
 				  <a href="#">
@@ -166,7 +167,6 @@
 					<li><a href="#"><i class="fa fa-circle-o"></i> 文章添加</a></li>
 				  </ul>
 				</li>
-                -->
 				<li class="treeview">
 				  <a href="#">
 					<i class="fa fa-pie-chart"></i>
@@ -181,6 +181,7 @@
 				  </ul>
 				</li>
 				<li><a href="#"><i class="fa fa-pie-chart"></i> <span>业务管理-3</span></a></li>
+                -->
 				<!-- 业务菜单-END -->
 
                 <li class="header">人员管理</li>
