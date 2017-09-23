@@ -151,30 +151,33 @@
 
 				<!-- 业务菜单-BEGIN -->
 				<li class="header">业务管理</li>
+                <li class="<?= active_link_controller('blogs') ?>"><a href="/admin/blogs"><i class="fa fa-user"></i> <span>文章管理</span></a></li>
+                <!--
 				<li class="treeview">
 				  <a href="#">
 					<i class="fa fa-pie-chart"></i>
-					<span>业务管理-1</span>
+					<span>文章管理</span>
 					<span class="pull-right-container">
 					  <i class="fa fa-angle-left pull-right"></i>
 					</span>
 				  </a>
 				  <ul class="treeview-menu">
-					<li><a href="#"><i class="fa fa-circle-o"></i> 业务管理-1</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> 业务管理-1</a></li>
+					<li><a href="#"><i class="fa fa-circle-o"></i> 文章列表</a></li>
+					<li><a href="#"><i class="fa fa-circle-o"></i> 文章添加</a></li>
 				  </ul>
 				</li>
+                -->
 				<li class="treeview">
 				  <a href="#">
 					<i class="fa fa-pie-chart"></i>
-					<span>业务管理-2</span>
+					<span>标签管理</span>
 					<span class="pull-right-container">
 					  <i class="fa fa-angle-left pull-right"></i>
 					</span>
 				  </a>
 				  <ul class="treeview-menu">
-					<li><a href="#"><i class="fa fa-circle-o"></i> 业务管理-2</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> 业务管理-2</a></li>
+					<li><a href="#"><i class="fa fa-circle-o"></i> 标签列表</a></li>
+					<li><a href="#"><i class="fa fa-circle-o"></i> 标签添加</a></li>
 				  </ul>
 				</li>
 				<li><a href="#"><i class="fa fa-pie-chart"></i> <span>业务管理-3</span></a></li>
