@@ -152,6 +152,7 @@
 				<!-- 业务菜单-BEGIN -->
 				<li class="header">业务管理</li>
                 <li class="<?= active_link_controller('blogs') ?>"><a href="/admin/blogs"><i class="fa fa-user"></i> <span>文章管理</span></a></li>
+                <li class="<?= active_link_controller('category') ?>"><a href="/admin/category"><i class="fa fa-user"></i> <span>标签分类管理</span></a></li>
                 <li class="<?= active_link_controller('tags') ?>"><a href="/admin/tags"><i class="fa fa-user"></i> <span>标签管理</span></a></li>
                 <!--
 				<li class="treeview">
