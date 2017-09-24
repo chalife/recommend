@@ -172,7 +172,7 @@ class Tag_Model extends CI_Model
 			'created_at'	=> date('Y-m-d H:i:s')
 		);*/
 
-		$this->db->insert('users', $values);
+		$this->db->insert('tags', $values);
 
 		return $this->db->insert_id();
 	}

@@ -152,8 +152,8 @@ class Category_Model extends CI_Model
 	*/
 	function find($id)
 	{
-		$query = $this->db->where('id', $id);
-		$query = $this->db->get('blogs');
+		$query = $this->db->where('category_id', $id);
+		$query = $this->db->get('tag_category');
 		return $query->row();		
 
 	}

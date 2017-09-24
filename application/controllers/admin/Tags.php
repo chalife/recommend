@@ -7,6 +7,7 @@ class Tags extends Admin_Controller {
 		parent::__construct();
 
 		$this->load->model('Tag_model');
+		$this->load->model('Category_model');
 	}
 
 	public function index()
@@ -66,7 +67,11 @@ class Tags extends Admin_Controller {
 			$this->data['tags_show_end'] = $show_end;
 			$this->data['tags_total_rows'] = $config['total_rows'];
 			$this->data['tags_list'] = $this->Tag_model->getAll($config['per_page'], $offset, $keyword);
-
+            foreach($this->data['tags_list'] as &$val)
+            {
+                $category_info = $this->Category_model->find($val->category_id);
+                $val->category_name = $category_info->category_name;
+            }
 			//初始化分页
 			$this->load->library('pagination');
 			$this->pagination->initialize($config);
@@ -154,7 +159,7 @@ class Tags extends Admin_Controller {
 
 			// 表单校验
 			$this->form_validation->set_rules('name', '姓名', 'required|min_length[2]|max_length[20]');
-			$this->form_validation->set_rules('tagname', '昵称', 'required|min_length[2]|max_length[20]');
+			$this->form_validation->set_rules('tag_name', '昵称', 'required|min_length[2]|max_length[20]');
 			$this->form_validation->set_rules('mobile', '手机', 'required|min_length[11]|max_length[11]');
 			$this->form_validation->set_rules('active', '状态', 'required');
 
@@ -162,7 +167,7 @@ class Tags extends Admin_Controller {
 			if ($this->form_validation->run() == TRUE)
 			{
 				$name = $this->input->post('name');
-				$tagname = $this->input->post('tagname');
+				$tag_name = $this->input->post('tag_name');
 				$mobile = $this->input->post('mobile');
 				$password = $this->input->post('password');
 				$active = $this->input->post('active');
@@ -173,7 +178,7 @@ class Tags extends Admin_Controller {
 
 				$data = array(
 					'name' => $name,
-					'tagname'  => $tagname,
+					'tag_name'  => $tag_name,
 					'mobile'  => $mobile,
 					'password'  => $password,
 					'active'  => $active,
@@ -204,7 +209,7 @@ class Tags extends Admin_Controller {
 				$this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 
 				$this->data['name'] = $this->form_validation->set_value('name');
-				$this->data['tagname'] = $this->form_validation->set_value('tagname');
+				$this->data['tag_name'] = $this->form_validation->set_value('tag_name');
 				$this->data['mobile'] = $this->form_validation->set_value('mobile');
 				$this->data['password'] = $this->form_validation->set_value('password');
 				$this->data['active'] = $this->form_validation->set_value('active');
@@ -236,7 +241,7 @@ class Tags extends Admin_Controller {
 		$this->data['tag'] = $tag;
 
 		$this->data['name'] = isset($this->data['name']) ? $this->data['name'] : $tag->name ;
-		$this->data['tagname'] = isset($this->data['tagname']) ? $this->data['tagname'] : $tag->tagname ;
+		$this->data['tag_name'] = isset($this->data['tag_name']) ? $this->data['tag_name'] : $tag->tag_name ;
 		$this->data['mobile'] = isset($this->data['mobile']) ? $this->data['mobile'] : $tag->mobile ;
 		$this->data['password'] = isset($this->data['password']) ? $this->data['password'] : $tag->password ;
 		$this->data['active'] = isset($this->data['active']) ? $this->data['active'] : $tag->active ;
@@ -257,33 +262,20 @@ class Tags extends Admin_Controller {
 		if($this->input->method() == "post"){
 
 			// 表单校验
-			$this->form_validation->set_rules('name', '姓名', 'required|min_length[2]|max_length[20]');
-			$this->form_validation->set_rules('tagname', '昵称', 'required|min_length[2]|max_length[20]|is_unique[tags.tagname]');
-			$this->form_validation->set_rules('mobile', '手机', 'required|min_length[11]|max_length[11]|is_unique[tags.mobile]');
-			$this->form_validation->set_rules('password', '密码', 'required|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('active', '状态', 'required');
+			$this->form_validation->set_rules('category_id', '标签分类', 'required');
+			$this->form_validation->set_rules('tag_name', '标签名称', 'required|min_length[2]|max_length[20]|is_unique[tags.tag_name]');
+			$this->form_validation->set_rules('status', '状态', 'required');
 
 			if ($this->form_validation->run() == TRUE)
 			{
-				$name = $this->input->post('name');
-				$tagname = $this->input->post('tagname');
-				$mobile = $this->input->post('mobile');
-				$password = $this->input->post('password');
-				$active = $this->input->post('active');
-				$gender = $this->input->post('gender');
-				$birthday = $this->input->post('birthday');
-				$info = $this->input->post('info');
+				$category_id= $this->input->post('category_id');
+				$tag_name = $this->input->post('tag_name');
+				$status = $this->input->post('status');
 
 				$data = array(
-					'name' => $name,
-					'tagname'  => $tagname,
-					'mobile'  => $mobile,
-					'password'  => $password,
-					'active'  => $active,
-					'created'	=> time(),
-					'birthday'	=> $birthday,
-					'gender'	=> $gender,
-					'info'	=> $info,
+					'category_id' => $category_id,
+					'tag_name'  => $tag_name,
+					'status'  => $status,
 				);
 				$this->Tag_model->create($data);
 
@@ -296,13 +288,13 @@ class Tags extends Admin_Controller {
 			{
 				$this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 
-				$this->data['name'] = $this->form_validation->set_value('name');
-				$this->data['tagname'] = $this->form_validation->set_value('tagname');
-				$this->data['password'] = $this->form_validation->set_value('password');
-				$this->data['mobile'] = $this->form_validation->set_value('mobile');
-				$this->data['active'] = $this->form_validation->set_value('active');
+				$this->data['category_id'] = $this->form_validation->set_value('category_id');
+				$this->data['tag_name'] = $this->form_validation->set_value('tag_name');
+				$this->data['status'] = $this->form_validation->set_value('status');
 			}
 		}
+        //获取标签分类
+        $this->data['category_name'] = $this->Category_model->getAll();
 
 		//加载模板
 		$this->template->admin_load('admin/tags/create', $this->data);
