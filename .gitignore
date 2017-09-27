@@ -1,3 +1,4 @@
 .gitignore
 .idea
-
+session/
+application/config/database.php
