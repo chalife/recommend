@@ -257,33 +257,24 @@ class Blogs extends Admin_Controller {
 		if($this->input->method() == "post"){
 
 			// 表单校验
-			$this->form_validation->set_rules('name', '姓名', 'required|min_length[2]|max_length[20]');
-			$this->form_validation->set_rules('blogname', '昵称', 'required|min_length[2]|max_length[20]|is_unique[blogs.blogname]');
-			$this->form_validation->set_rules('mobile', '手机', 'required|min_length[11]|max_length[11]|is_unique[blogs.mobile]');
-			$this->form_validation->set_rules('password', '密码', 'required|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('active', '状态', 'required');
+			$this->form_validation->set_rules('title', '标题', 'required|min_length[2]|max_length[50]');
+			$this->form_validation->set_rules('content', '内容', 'required');
+			$this->form_validation->set_rules('status', '状态', 'required');
 
 			if ($this->form_validation->run() == TRUE)
 			{
-				$name = $this->input->post('name');
-				$blogname = $this->input->post('blogname');
-				$mobile = $this->input->post('mobile');
-				$password = $this->input->post('password');
-				$active = $this->input->post('active');
-				$gender = $this->input->post('gender');
-				$birthday = $this->input->post('birthday');
-				$info = $this->input->post('info');
+				$title = $this->input->post('title');
+				$content = $this->input->post('content');
+				$author = $this->input->post('author');
+				$status = $this->input->post('status');
 
 				$data = array(
-					'name' => $name,
-					'blogname'  => $blogname,
-					'mobile'  => $mobile,
-					'password'  => $password,
-					'active'  => $active,
-					'created'	=> time(),
-					'birthday'	=> $birthday,
-					'gender'	=> $gender,
-					'info'	=> $info,
+					'title' => $title,
+					'content'  => $content,
+                    'author' => $author,
+					'status'  => $status,
+					'pub_time'	=> time(),
+					'create_time'	=> time()
 				);
 				$this->Blog_model->create($data);
 
@@ -296,9 +287,9 @@ class Blogs extends Admin_Controller {
 			{
 				$this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 
-				$this->data['name'] = $this->form_validation->set_value('name');
-				$this->data['blogname'] = $this->form_validation->set_value('blogname');
-				$this->data['password'] = $this->form_validation->set_value('password');
+				$this->data['title'] = $this->form_validation->set_value('title');
+				$this->data['content'] = $this->form_validation->set_value('content');
+				$this->data['author'] = $this->form_validation->set_value('author');
 				$this->data['mobile'] = $this->form_validation->set_value('mobile');
 				$this->data['active'] = $this->form_validation->set_value('active');
 			}
